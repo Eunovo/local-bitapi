@@ -42,7 +42,7 @@ declare module 'bitcoin-core' {
         spendable: boolean;
     }
 
-    export class BitcoinCore {
+    export default class BitcoinCore {
         constructor(options: BitcoinCoreOptions);
         getAddressTransactions(address: string, options?: any): Promise<Transaction[]>;
         listUnspent(minConfirmations: number, maxConfirmations: number, addresses: string[], options?: any): Promise<UTXO[]>;

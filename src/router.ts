@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { BitcoinCore } from 'bitcoin-core';
+import BitcoinCore from 'bitcoin-core';
 import { getMessageFrom } from './utils';
 import { config } from './config';
 
