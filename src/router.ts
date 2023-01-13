@@ -31,7 +31,7 @@ router.get('/utxos/:address', async (req: Request, res: Response) => {
   }
 });
 
-router.post('/broadcast', async (req: Request, res: Response) => {
+router.post('/transaction', async (req: Request, res: Response) => {
   try {
     const rawTransaction = req.body.rawTransaction;
     const txid = await client.sendRawTransaction(rawTransaction);
