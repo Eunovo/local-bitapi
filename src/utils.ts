@@ -15,16 +15,15 @@ export const EnvValue = (params: IEnvValueParams) => {
     const { name, isRequired, type = 'string' } = params;
 
     return (target: any, propertyKey: string) => {
-        const value = process.env[name];
+        const value = process.env[name] || params.default;
         if (!value && isRequired) {
             throw new Error(`Environment variable ${name} is required`);
         }
-        if (!value) return params.default;
 
         let typedValue;
         switch (type) {
             case 'number':
-                typedValue = parseFloat(value);
+                typedValue = value ? parseFloat(value) : 0;
                 break;
             case 'boolean':
                 typedValue = value === 'true';
