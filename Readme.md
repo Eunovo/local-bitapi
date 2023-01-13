@@ -25,6 +25,7 @@ The following environment variables are optional and have default values:
 ```
 BITCOIND_HOST: The host of the Bitcoind instance. Default: 127.0.0.1
 BITCOIND_PORT: The port of the Bitcoind instance. Default: 8332
+APP_PORT: The port to run the local-bitapi server on. Default: 3000
 ```
 
 ## Available Routes

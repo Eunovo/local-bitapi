@@ -29,6 +29,12 @@ class Config {
     })
     BITCOIND_PORT!: number;
 
+    @EnvValue({
+        name: 'APP_PORT',
+        default: 3000
+    })
+    APP_PORT!: number;
+
 }
 
 export const config = new Config();
