@@ -27,8 +27,17 @@ router.get('/transactions/:address', async (req: Request, res: Response) => {
   try {
     const address = req.params.address;
     const { labels } = await client.getAddressInfo(address);
-    const transactions = await client.listTransactions(labels[0], 10, 0, true);
-    res.json(transactions);
+    const rawTransactions = await client.listTransactions(labels[0], 20, 0, true);
+
+    const decodedTransactions = await Promise.all(rawTransactions.map(async (tx) => {
+      const rawTx = await client.getTransaction(tx.txid);
+      const decodedTx = await client.decodeRawTransaction(rawTx.hex);
+      
+      if (typeof decodedTx !== 'object') return tx;
+      return { ...tx, ...decodedTx };
+    }));
+
+    res.json(decodedTransactions);
   } catch (err: unknown) {
     res.status(500).json({ error: getMessageFrom(err) });
   }
