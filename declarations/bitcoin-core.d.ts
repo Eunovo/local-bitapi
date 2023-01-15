@@ -45,7 +45,9 @@ declare module 'bitcoin-core' {
 
     export default class BitcoinCore {
         constructor(options: BitcoinCoreOptions);
-        getAddressTransactions(address: string, options?: any): Promise<Transaction[]>;
+        getAddressInfo(address: string): Promise<{ labels: string[] }>
+        importAddress(address: string, label: string, rescan: boolean): Promise<unknown>;
+        listTransactions(label: string, count: number, skip: number, includeWatchOnly: boolean, options?: any): Promise<Transaction[]>;
         listUnspent(minConfirmations: number, maxConfirmations: number, addresses: string[], options?: any): Promise<UTXO[]>;
         sendRawTransaction(transaction: string, options?: any): Promise<string>;
     }

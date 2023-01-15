@@ -12,10 +12,22 @@ const client = new BitcoinCore({
   wallet: config.WALLET
 });
 
+router.post('/import-address', async (req: Request, res: Response) => {
+  try {
+    const address = req.body.address;
+    const label = req.body.label;
+    await client.importAddress(address, label ?? "", true);
+    res.json({ message: 'success' });
+  } catch (err: unknown) {
+    res.status(500).json({ error: getMessageFrom(err) });
+  }
+});
+
 router.get('/transactions/:address', async (req: Request, res: Response) => {
   try {
     const address = req.params.address;
-    const transactions = await client.getAddressTransactions(address);
+    const { labels } = await client.getAddressInfo(address);
+    const transactions = await client.listTransactions(labels[0], 10, 0, true);
     res.json(transactions);
   } catch (err: unknown) {
     res.status(500).json({ error: getMessageFrom(err) });
