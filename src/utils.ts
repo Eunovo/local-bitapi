@@ -34,6 +34,9 @@ export const EnvValue = (params: IEnvValueParams) => {
             default:
                 throw new Error(`Invalid type: ${type}`);
         }
+        
+        console.log(`[ENV]: Loaded ${value} for ${name}`);
+
         Object.defineProperty(target, propertyKey, {
             value: typedValue,
             writable: false,
