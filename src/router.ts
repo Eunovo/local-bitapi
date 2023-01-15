@@ -8,7 +8,8 @@ const client = new BitcoinCore({
   host: config.BITCOIND_HOST,
   port: config.BITCOIND_PORT,
   username: config.BITCOIND_RPC_USERNAME,
-  password: config.BITCOIND_RPC_PASSWORD
+  password: config.BITCOIND_RPC_PASSWORD,
+  wallet: config.WALLET
 });
 
 router.get('/transactions/:address', async (req: Request, res: Response) => {

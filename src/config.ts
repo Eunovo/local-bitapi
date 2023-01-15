@@ -25,9 +25,21 @@ class Config {
 
     @EnvValue({
         name: 'BITCOIND_PORT',
+        type: 'number',
         default: 8332
     })
     BITCOIND_PORT!: number;
+
+    @EnvValue({
+        name: 'WALLET',
+    })
+    WALLET?: string;
+
+    @EnvValue({
+        name: 'DEBUG',
+        default: 'bitcoin-core'
+    })
+    DEBUG!: string
 
     @EnvValue({
         name: 'APP_PORT',

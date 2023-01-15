@@ -9,6 +9,7 @@ declare module 'bitcoin-core' {
         sslStrict?: boolean;
         sslOptions?: any;
         maxRetries?: number;
+        wallet?: string;
     }
 
     export interface Transaction {
