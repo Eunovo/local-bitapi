@@ -19,6 +19,7 @@ The following environment variables are required to be set:
 ```
 BITCOIND_RPC_USERNAME: The username for connecting to the Bitcoind instance.
 BITCOIND_RPC_PASSWORD: The password for connecting to the Bitcoind instance.
+WALLET: The bitcoin wallet to connect to.
 ```
 The following environment variables are optional and have default values:
 
@@ -31,7 +32,9 @@ APP_PORT: The port to run the local-bitapi server on. Default: 3000
 ## Available Routes
 
 ```
-GET /api/transactions/:address  # Retrieve the transactions for a specific address.
+GET /api/import-addresss  # Imports a specific address into your wallet.
+GET /api/transactions/by-txid/:address  # Retrieve the transactions for a specific address.
+GET /api/transactions/by-address/:address  # Retrieve the transactions for a specific address.
 GET /api/utxos/:address # Retrieve the unspent transaction outputs (UTXOs) for a specific address.
 POST /api/transaction # Broadcast a raw transaction to the Bitcoind instance.
 ```
