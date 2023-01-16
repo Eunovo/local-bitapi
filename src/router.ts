@@ -23,7 +23,22 @@ router.post('/import-address', async (req: Request, res: Response) => {
   }
 });
 
-router.get('/transactions/:address', async (req: Request, res: Response) => {
+router.get('/transactions/by-txid/:txid', async (req: Request, res: Response) => {
+  try {
+    const txid = req.params.txid;
+    const rawTx = await client.getTransaction(txid);
+    const decodedTx = await client.decodeRawTransaction(rawTx.hex);
+
+    if (typeof decodedTx !== 'object')
+      throw new Error("Unexpected transaction response");
+    
+      res.json({ ...rawTx, ...decodedTx });
+  } catch (err: unknown) {
+    res.status(500).json({ error: getMessageFrom(err) });
+  }
+});
+
+router.get('/transactions/by-address/:address', async (req: Request, res: Response) => {
   try {
     const address = req.params.address;
     const { labels } = await client.getAddressInfo(address);
@@ -32,7 +47,7 @@ router.get('/transactions/:address', async (req: Request, res: Response) => {
     const decodedTransactions = await Promise.all(rawTransactions.map(async (tx) => {
       const rawTx = await client.getTransaction(tx.txid);
       const decodedTx = await client.decodeRawTransaction(rawTx.hex);
-      
+
       if (typeof decodedTx !== 'object') return tx;
       return { ...tx, ...decodedTx };
     }));
