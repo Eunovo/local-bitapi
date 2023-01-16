@@ -32,8 +32,9 @@ class Config {
 
     @EnvValue({
         name: 'WALLET',
+        isRequired: true
     })
-    WALLET?: string;
+    WALLET!: string;
 
     @EnvValue({
         name: 'DEBUG',
