@@ -26,13 +26,13 @@ router.post('/import-address', async (req: Request, res: Response) => {
 router.get('/transactions/by-txid/:txid', async (req: Request, res: Response) => {
   try {
     const txid = req.params.txid;
-    const rawTx = await client.getTransaction(txid);
-    const decodedTx = await client.decodeRawTransaction(rawTx.hex);
+    const rawTxHex = await client.getRawTransaction(txid);
+    const decodedTx = await client.decodeRawTransaction(rawTxHex);
 
     if (typeof decodedTx !== 'object')
       throw new Error("Unexpected transaction response");
     
-      res.json({ ...rawTx, ...decodedTx });
+      res.json({ ...decodedTx, hex: rawTxHex });
   } catch (err: unknown) {
     res.status(500).json({ error: getMessageFrom(err) });
   }
